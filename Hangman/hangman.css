@@ -1,0 +1,13 @@
+td {
+	width: 25px;
+	magin: 5px;
+	text-align:center;
+}
+
+#word td {
+	border-bottom: solid 1px black;
+}
+
+#word td.special {
+	border-bottom: none;
+}
