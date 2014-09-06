@@ -2,7 +2,6 @@ $(function() {
     game();
 
     $('#restart').on('click', function() {
-        console.log("FOO");
         game();
     });
 });
@@ -30,9 +29,7 @@ game = function() {
 
     // remove/add the key press listeners
     $(document).off('keypress').keypress(function(e) {
-        console.log(e.which);
         key = (String.fromCharCode(e.which)).toUpperCase();
-        console.log(key);
         if(isLetter(key.charCodeAt(0))) {
             clickLetter(key);
         }
@@ -44,7 +41,6 @@ game = function() {
     secret.val = secret.val.toUpperCase();
     secret.orig = secret.val;
     var gameOver = false;
-    console.log(secret.val);
 
     // initialize the scaffold
     var parts = 0;
