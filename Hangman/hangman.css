@@ -11,3 +11,8 @@ td {
 #word td.special {
 	border-bottom: none;
 }
+
+#scaffold {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
