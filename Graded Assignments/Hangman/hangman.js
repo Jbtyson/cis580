@@ -41,10 +41,22 @@ game = function() {
     secret.val = secret.val.toUpperCase();
     secret.orig = secret.val;
     var gameOver = false;
+	var canvas = $('#mycanvas')[0];
+	context = canvas.getContext("2d");
+	drawScaffold(context);
 
     // initialize the scaffold
     var parts = 0;
 
+	function drawScaffold(context) {
+		var source = new Image();
+		source.src = 'drawing.svg';
+		source.width = '100';
+		source.height = '100';
+		source.onload = function(){
+    context.drawImage(source,0,0);
+}
+	}
     // displays the initial spaces of the secret word
     function displaySecret(secret) {
         for(i = 0; i < secret.length; i++) {
