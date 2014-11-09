@@ -171,7 +171,9 @@ Helicopter.prototype = {
 		// fire one missile
 		else if(e.which == 3) {
 			if(this.numMissiles > 0) {
-				this.missiles.push(new Missile(this.x, this.y, mouse.x, mouse.y, this.scrolling, this.id++));
+				m = new Missile(this.x, this.y, mouse.x, mouse.y, this.scrolling, this.id++);
+				this.missiles.push(m);
+				this.grid.add(m);
 				this.numMissiles--;
 			}
 		}

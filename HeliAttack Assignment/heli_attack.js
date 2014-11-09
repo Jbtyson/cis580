@@ -10,13 +10,13 @@ var TIME_STEP = 1000/60;
 var Resource = { img: {}, sfx: {}}
 
 Resource.img.reticle = new Image();
-Resource.img.reticle.src = "images/reticle.png";
+Resource.img.reticle.src = "img/reticle.png";
 Resource.img.background = new Image();
-Resource.img.background.src = "images/background.png";
+Resource.img.background.src = "img/background.png";
 Resource.img.middleground = new Image();
-Resource.img.middleground.src = "images/midground.png";
+Resource.img.middleground.src = "img/midground.png";
 Resource.img.foreground = new Image();
-Resource.img.foreground.src = "images/foreground.png";
+Resource.img.foreground.src = "img/foreground.png";
 
 //Resource.sfx.collide = new Audio();
 //Resource.sfx.collide.src = "collide.wav";

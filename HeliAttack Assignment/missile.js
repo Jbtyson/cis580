@@ -22,6 +22,7 @@ var Missile = function(x, y, tx, ty, scrolling, id) {
 	this.sprite_sheet.src = "images/helicopter.png";
 	this.animation = 0;
 	this.explosion = null;
+	this.radius = 4;
 };
 
 Missile.prototype = {
