@@ -77,6 +77,21 @@ Helicopter.prototype = {
 		}
 	},
 	
+	powerupReceived: function(type) {
+		if(type == "missile") {
+			this.missiles += 3;
+		}
+		else if(type == "health") {
+			this.health += 25;
+		}
+		else if(type == "life") {
+			this.life++;
+		}
+		else {
+			this.health -= 10;
+		}
+	},
+	
 	move: function(inputState) {
 		if(inputState.up) {
 			this.y -= this.velocity * 2;

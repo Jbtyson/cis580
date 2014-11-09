@@ -114,6 +114,7 @@ var Game = function (canvasId) {
   this.targets = [];
   this.bullets = [];
   this.missiles = [];
+  this.powerups = [];
 	
   // Add enemies
   for(i = 0; i < 100; i++) {
@@ -189,6 +190,13 @@ Game.prototype = {
 			target.update(elapsedTime);
 		});
 		
+		// Update the powerups
+		this.powerups.forEach( function(powerup, index, arr) {
+			powerup.update(elapsedTime);
+			if(powerup.state == "dead")
+				arr = arr.splice(index, 1);
+		});
+		
 		// Bound helicopter to screen
 		if(this.heli.x < 0) this.heli.x = 0;
 		
@@ -198,6 +206,8 @@ Game.prototype = {
 			self.bullets.forEach( function(bullet) {
 				if(Math.pow(bullet.x - target.x, 2) + Math.pow(bullet.y - target.y, 2) <= Math.pow(target.radius, 2)) {
 					// Remove the target from the world
+					//remove this
+					self.powerups.push(new Powerup(self, target.x, target.y, "random"));
 					targetArr = targetArr.splice(targetIndex, 1);
 					self.score += 10;
 				}
@@ -249,6 +259,9 @@ Game.prototype = {
 		});
 		this.missiles.forEach( function(missile) {
 			missile.render(self.backBufferContext);
+		});
+		this.powerups.forEach( function(powerup) {
+			powerup.render(self.backBufferContext);
 		});
 
 		// Restore render state
