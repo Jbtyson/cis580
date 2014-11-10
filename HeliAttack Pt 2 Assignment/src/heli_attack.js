@@ -51,7 +51,7 @@ Resource.Audio.missile.src = "sfx/missile.wav";
 Resource.Audio.explosion.src = "sfx/explosion.wav";
 Resource.Audio.powerupObtained.src = "sfx/powerup_obtained.wav";
 
-Resource.Audio.music.volume = 0;
+Resource.Audio.music.volume = 0.1;
 Resource.Audio.music.loop = true;
 Resource.Audio.bullet.volume = 0.2;
 Resource.Audio.bullet.loop = true;
@@ -115,6 +115,9 @@ var Game = function (canvasId) {
   this.bullets = [];
   this.missiles = [];
   this.powerups = [];
+  this.guns = [];
+  this.jets = [];
+  this.tanks = [];
 	
   // Add enemies
   for(i = 0; i < 100; i++) {
@@ -125,6 +128,24 @@ var Game = function (canvasId) {
 		Math.random() * 10
 	);
 	this.targets.push(target);
+  } 
+  for(i = 0; i < 20; i++) {
+    var gun = new Enemy(
+		this,
+		400 * (i + 1),
+		400,
+		"gun"
+	);
+	this.guns.push(gun);
+  }
+  for(i = 0; i < 20; i++) {
+    var tank = new Enemy(
+		this,
+		400 * (i + 1),
+		350,
+		"tank"
+	);
+	this.tanks.push(tank);
   }
   
   // Timing variables
@@ -197,6 +218,23 @@ Game.prototype = {
 				arr = arr.splice(index, 1);
 		});
 		
+		// Update the Enemies
+		this.guns.forEach( function(enemy, index, arr) {
+			enemy.update(elapsedTime);
+			if(enemy.state == "dead")
+				arr = arr.splice(index, 1);
+		});
+		this.jets.forEach( function(enemy, index, arr) {
+			enemy.update(elapsedTime);
+			if(enemy.state == "dead")
+				arr = arr.splice(index, 1);
+		});
+		this.tanks.forEach( function(enemy, index, arr) {
+			enemy.update(elapsedTime);
+			if(enemy.state == "dead")
+				arr = arr.splice(index, 1);
+		});
+		
 		// Bound helicopter to screen
 		if(this.heli.x < 0) this.heli.x = 0;
 		
@@ -262,6 +300,15 @@ Game.prototype = {
 		});
 		this.powerups.forEach( function(powerup) {
 			powerup.render(self.backBufferContext);
+		});
+		this.guns.forEach( function(enemy) {
+			enemy.render(self.backBufferContext);
+		});
+		this.jets.forEach( function(enemy) {
+			enemy.render(self.backBufferContext);
+		});
+		this.tanks.forEach( function(enemy) {
+			enemy.render(self.backBufferContext);
 		});
 
 		// Restore render state
