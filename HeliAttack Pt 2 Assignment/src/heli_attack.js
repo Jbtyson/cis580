@@ -51,9 +51,9 @@ Resource.Audio.missile.src = "sfx/missile.wav";
 Resource.Audio.explosion.src = "sfx/explosion.wav";
 Resource.Audio.powerupObtained.src = "sfx/powerup_obtained.wav";
 
-Resource.Audio.music.volume = 0.1;
+Resource.Audio.music.volume = 0;
 Resource.Audio.music.loop = true;
-Resource.Audio.bullet.volume = 0.1;
+Resource.Audio.bullet.volume = 0.2;
 Resource.Audio.bullet.loop = true;
 Resource.Audio.missile.volume = 0.2;
 Resource.Audio.explosion.volume = 0.2;
