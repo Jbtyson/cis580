@@ -14,7 +14,8 @@ var Enemy = function(game, x, y, type) {
 	if(this.type == "jet")
 		this.speed = 0.2;
     else
-	    this.speed = 0.1;
+	    this.speed = 0.05;
+		
 	this.deviation = 200;
 };
 
@@ -38,15 +39,18 @@ Enemy.prototype = {
 			switch(this.state) {
 				// check if its on the screen
 				case "wait":
-					if(this.x < 900 && this.x > -100)
+					if(this.x - this.game.heli.x < 900)
 						this.state = "active";
-					else if(this.x < -100)
-						this.state = "dead";
 					break;
 					
 				// simply flying left
 				case "active":
-					this.x -= this.speed *= elapsedTime;
+					this.x -= this.speed * elapsedTime;
+					console.log(this.x);
+					console.log(this.game.heli.x);
+					// console.log(this.x - this.game.heli.x);
+					if(this.x < -100)
+						this.state = "dead";
 					break;
 			}	
 		}
@@ -56,7 +60,7 @@ Enemy.prototype = {
 			switch(this.state) {
 				// off screen
 				case "wait":
-					if(this.x < 900 && this.x > -100)
+					if(this.x - this.game.heli.x < 900 && this.x - this.game.heli.x > -100)
 						this.state = "active";
 					break;
 					
@@ -67,11 +71,11 @@ Enemy.prototype = {
 						var r = Math.floor(Math.random() * 100);
 						if(r < 35)
 							this.state = "movingLeft";
-						else if (r < 35)
+						else if (r < 70)
 							this.state = "movingRight";
 						else 
 							this.state = "rest";
-						this.timer = Math.floor(Math.random() * 1500);
+						this.timer = Math.floor(Math.random() * 2500);
 					}
 					break;
 				

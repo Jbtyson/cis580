@@ -147,6 +147,15 @@ var Game = function (canvasId) {
 	);
 	this.tanks.push(tank);
   }
+  for(i = 0; i < 20; i++) {
+    var jet = new Enemy(
+		this,
+		400 * (i + 1),
+		100,
+		"jet"
+	);
+	this.jets.push(jet);
+  }
   
   // Timing variables
   this.elapsedTime = 0.0;
