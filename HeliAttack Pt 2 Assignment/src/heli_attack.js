@@ -192,7 +192,7 @@ Game.prototype = {
 		this.inputState.worldX += deltaX;
 		
 		
-		// Fire one bullet every 500ms
+		// Fire one bullet every 100ms
 		this.heli.bulletDelay += elapsedTime;
 		if(this.inputState.firing == true && (this.heli.bulletDelay > 100)) {
 			this.heli.fireBullet(this.inputState.worldX, this.inputState.worldY);
@@ -203,7 +203,7 @@ Game.prototype = {
 		this.bullets.forEach( function(bullet, index, arr) {
 			bullet.update(elapsedTime);
 			// Remove off-screen bullets
-			if(bullet.y > HEIGHT || bullet.y < 0 || bullet.x > LEVEL_LENGTH)
+			if(bullet.state === "dead")
 				arr = arr.splice(index, 1);
 		});
 		
@@ -410,6 +410,7 @@ Game.prototype = {
 			case 0:
 				this.inputState.firing = true;
 				Resource.Audio.bullet.play();
+				
 				break;
 			case 2:
 				this.heli.fireMissile(this.inputState.worldX, this.inputState.worldY);
