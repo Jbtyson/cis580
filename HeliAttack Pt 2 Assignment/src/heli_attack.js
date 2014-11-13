@@ -2,6 +2,7 @@
 var WIDTH = 800;
 var HEIGHT = 480;
 var LEVEL_LENGTH = 14000;
+this.level = 1;
 
 // Fixed time step of 1/60th a second
 var TIME_STEP = 1000/60;
@@ -9,12 +10,14 @@ var TIME_STEP = 1000/60;
 // Resources
 //----------------------------------
 Resource = {
-	loading: 9,
+	loading: 11,
 	Image: {
 		spritesheet: new Image(),
 		foreground: new Image(),
 		midground: new Image(),
 		background: new Image(),
+		background_night: new Image(),
+		midground_fire: new Image(),
 	},
 	Audio: {
 		music: new Audio(),
@@ -33,6 +36,8 @@ Resource.Image.spritesheet.onload = onload;
 Resource.Image.foreground.onload = onload;
 Resource.Image.midground.onload = onload;
 Resource.Image.background.onload = onload;
+Resource.Image.background_night.onload = onload;
+Resource.Image.midground_fire.onload = onload;
 
 Resource.Audio.music.oncanplaythrough = onload;
 Resource.Audio.bullet.oncanplaythrough = onload;
@@ -44,6 +49,8 @@ Resource.Image.spritesheet.src = "img/helicopter.png";
 Resource.Image.foreground.src = "img/foreground.png";
 Resource.Image.midground.src = "img/midground.png";
 Resource.Image.background.src = "img/background.png";
+Resource.Image.background_night.src = "img/background_night.png";
+Resource.Image.midground_fire.src = "img/midground_fire.png";
 
 Resource.Audio.music.src = "sfx/before_my_body_is_dry.mp3";
 Resource.Audio.bullet.src = "sfx/bullet.wav";
@@ -79,16 +86,16 @@ var Game = function (canvasId) {
   this.cameraOffset = 200;
   this.parallaxLayers = [
 	{
-	  image: Resource.Image.foreground,
-	  scrollSpeed: 1
+		image: Resource.Image.foreground,
+		scrollSpeed: 1
 	},
 	{
-	  image: Resource.Image.midground,
-	  scrollSpeed: 0.5
+		image: Resource.Image.midground,
+		scrollSpeed: 0.5
 	},
 	{
-	  image: Resource.Image.background,
-	  scrollSpeed: 0.25
+		image: Resource.Image.background,
+		scrollSpeed: 0.25
 	}
   ];
 	
