@@ -10,7 +10,7 @@ var TIME_STEP = 1000/60;
 // Resources
 //----------------------------------
 Resource = {
-	loading: 12,
+	loading: 14,
 	Image: {
 		spritesheet: new Image(),
 		foreground: new Image(),
@@ -26,6 +26,8 @@ Resource = {
 		explosion: new Audio(),
 		powerupObtained: new Audio(),
 		showYoMoves: new Audio(),
+		death: new Audio(),
+		yes: new Audio(),
 	}
 }
 function onload() { 
@@ -46,6 +48,8 @@ Resource.Audio.missile.oncanplaythrough = onload;
 Resource.Audio.explosion.oncanplaythrough = onload;
 Resource.Audio.powerupObtained.oncanplaythrough = onload;
 Resource.Audio.showYoMoves.oncanplaythrough = onload;
+Resource.Audio.death.oncanplaythrough = onload;
+Resource.Audio.yes.oncanplaythrough = onload;
 
 Resource.Image.spritesheet.src = "img/helicopter.png";
 Resource.Image.foreground.src = "img/foreground.png";
@@ -60,6 +64,8 @@ Resource.Audio.missile.src = "sfx/missile.wav";
 Resource.Audio.explosion.src = "sfx/explosion.wav";
 Resource.Audio.powerupObtained.src = "sfx/powerup_obtained.wav";
 Resource.Audio.showYoMoves.src = "sfx/ShowYoMoves.mp3";
+Resource.Audio.death.src = "sfx/death.mp3";
+Resource.Audio.yes.src = "sfx/Yes.mp3";
 
 Resource.Audio.music.volume = 0.1;
 Resource.Audio.music.loop = true;
@@ -68,7 +74,9 @@ Resource.Audio.bullet.loop = true;
 Resource.Audio.missile.volume = 0.2;
 Resource.Audio.explosion.volume = 0.2;
 Resource.Audio.powerupObtained.volume = 1;
-Resource.Audio.showYoMoves.volume = 1;
+Resource.Audio.showYoMoves.volume = 0.1;
+Resource.Audio.death.volume = 0.1
+Resource.Audio.yes.volume = 0.1;
 
 
 
@@ -221,6 +229,9 @@ Game.prototype = {
 					self.powerups.push(new Powerup(self, target.x, target.y, "random"));
 					targetArr = targetArr.splice(targetIndex, 1);
 					self.score += 10;
+					///////////////////////////////////////////////////
+					Resource.Audio.yes.play();
+					///////////////////////////////////////////////////
 				}
 			});
 			// check for missile collision
@@ -230,6 +241,9 @@ Game.prototype = {
 					// remove the target from the world
 					targetArr = targetArr.splice(targetIndex, 1);
 					self.score += 10;
+					////////////////////////////////////////////
+					Resource.Audio.yes.play();
+					////////////////////////////////////////////
 				}
 			});
 		});
