@@ -10,7 +10,7 @@ var TIME_STEP = 1000/60;
 // Resources
 //----------------------------------
 Resource = {
-	loading: 15,
+	loading: 16,
 	Image: {
 		spritesheet: new Image(),
 		foreground: new Image(),
@@ -18,6 +18,7 @@ Resource = {
 		background: new Image(),
 		background_night: new Image(),
 		midground_fire: new Image(),
+		knee: new Image(),
 	},
 	Audio: {
 		music: new Audio(),
@@ -42,6 +43,7 @@ Resource.Image.midground.onload = onload;
 Resource.Image.background.onload = onload;
 Resource.Image.background_night.onload = onload;
 Resource.Image.midground_fire.onload = onload;
+Resource.Image.knee.onload = onload;
 
 Resource.Audio.music.oncanplaythrough = onload;
 Resource.Audio.music2.oncanplaythrough = onload;
@@ -59,8 +61,10 @@ Resource.Image.midground.src = "img/midground.png";
 Resource.Image.background.src = "img/background.png";
 Resource.Image.background_night.src = "img/background_night.png";
 Resource.Image.midground_fire.src = "img/midground_fire.png";
+Resource.Image.knee.src = "img/knee.png";
 
 Resource.Audio.music.src = "sfx/before_my_body_is_dry.mp3";
+//http://downloads.khinsider.com/game-soundtracks/album/kirby-super-star-original-game-audio/27-gourmet-race-stage-1-3.mp3
 Resource.Audio.music2.src = "sfx/gourmet_race.mp3";
 Resource.Audio.bullet.src = "sfx/bullet.wav";
 Resource.Audio.missile.src = "sfx/missile.wav";
@@ -70,7 +74,7 @@ Resource.Audio.showYoMoves.src = "sfx/ShowYoMoves.mp3";
 Resource.Audio.death.src = "sfx/death.mp3";
 Resource.Audio.yes.src = "sfx/Yes.mp3";
 
-Resource.Audio.music.volume = 1;
+Resource.Audio.music.volume = 0.1;
 Resource.Audio.music.loop = true;
 Resource.Audio.music2.volume = 0.1;
 Resource.Audio.music2.loop = true;
@@ -79,7 +83,7 @@ Resource.Audio.bullet.loop = true;
 Resource.Audio.missile.volume = 0.2;
 Resource.Audio.explosion.volume = 0.2;
 Resource.Audio.powerupObtained.volume = 1;
-Resource.Audio.showYoMoves.volume = 1;
+Resource.Audio.showYoMoves.volume = 0.1;
 Resource.Audio.death.volume = 0.1
 Resource.Audio.yes.volume = 0.1;
 
@@ -476,6 +480,7 @@ function waitForLoad() {
 		game.start();
 	} else {
 		setTimeout(waitForLoad, 1000);
+		
 	}
 };
 waitForLoad();
