@@ -90,11 +90,11 @@ var Game = function (canvasId) {
 		scrollSpeed: 1
 	},
 	{
-		image: Resource.Image.midground,
+		image: Resource.Image.midground_fire,
 		scrollSpeed: 0.5
 	},
 	{
-		image: Resource.Image.background,
+		image: Resource.Image.background_night,
 		scrollSpeed: 0.25
 	}
   ];
