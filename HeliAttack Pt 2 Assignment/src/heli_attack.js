@@ -10,7 +10,7 @@ var TIME_STEP = 1000/60;
 // Resources
 //----------------------------------
 Resource = {
-	loading: 11,
+	loading: 12,
 	Image: {
 		spritesheet: new Image(),
 		foreground: new Image(),
@@ -25,6 +25,7 @@ Resource = {
 		missile: new Audio(),
 		explosion: new Audio(),
 		powerupObtained: new Audio(),
+		showYoMoves: new Audio(),
 	}
 }
 function onload() { 
@@ -44,6 +45,7 @@ Resource.Audio.bullet.oncanplaythrough = onload;
 Resource.Audio.missile.oncanplaythrough = onload;
 Resource.Audio.explosion.oncanplaythrough = onload;
 Resource.Audio.powerupObtained.oncanplaythrough = onload;
+Resource.Audio.showYoMoves.oncanplaythrough = onload;
 
 Resource.Image.spritesheet.src = "img/helicopter.png";
 Resource.Image.foreground.src = "img/foreground.png";
@@ -57,6 +59,7 @@ Resource.Audio.bullet.src = "sfx/bullet.wav";
 Resource.Audio.missile.src = "sfx/missile.wav";
 Resource.Audio.explosion.src = "sfx/explosion.wav";
 Resource.Audio.powerupObtained.src = "sfx/powerup_obtained.wav";
+Resource.Audio.showYoMoves.src = "sfx/ShowYoMoves.mp3";
 
 Resource.Audio.music.volume = 0.1;
 Resource.Audio.music.loop = true;
@@ -65,6 +68,7 @@ Resource.Audio.bullet.loop = true;
 Resource.Audio.missile.volume = 0.2;
 Resource.Audio.explosion.volume = 0.2;
 Resource.Audio.powerupObtained.volume = 1;
+Resource.Audio.showYoMoves.volume = 1;
 
 
 
@@ -90,11 +94,11 @@ var Game = function (canvasId) {
 		scrollSpeed: 1
 	},
 	{
-		image: Resource.Image.midground_fire,
+		image: Resource.Image.midground,
 		scrollSpeed: 0.5
 	},
 	{
-		image: Resource.Image.background_night,
+		image: Resource.Image.background,
 		scrollSpeed: 0.25
 	}
   ];
@@ -379,6 +383,7 @@ Game.prototype = {
 	
 	start: function() {
 		var self = this;
+		Resource.Audio.showYoMoves.play();
 		
 		Resource.Audio.music.play();
 		
@@ -391,7 +396,7 @@ Game.prototype = {
 		
 		this.startTime = Date.now();
 		
-		this.gui.message("Begin!");
+		this.gui.message("Show Your Moves!");
 		setTimeout( function() {
 			self.gui.message("")
 		}, 3000);
