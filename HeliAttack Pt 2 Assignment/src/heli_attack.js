@@ -10,7 +10,7 @@ var TIME_STEP = 1000/60;
 // Resources
 //----------------------------------
 Resource = {
-	loading: 14,
+	loading: 15,
 	Image: {
 		spritesheet: new Image(),
 		foreground: new Image(),
@@ -21,6 +21,7 @@ Resource = {
 	},
 	Audio: {
 		music: new Audio(),
+		music2: new Audio(),
 		bullet: new Audio(),
 		missile: new Audio(),
 		explosion: new Audio(),
@@ -43,6 +44,7 @@ Resource.Image.background_night.onload = onload;
 Resource.Image.midground_fire.onload = onload;
 
 Resource.Audio.music.oncanplaythrough = onload;
+Resource.Audio.music2.oncanplaythrough = onload;
 Resource.Audio.bullet.oncanplaythrough = onload;
 Resource.Audio.missile.oncanplaythrough = onload;
 Resource.Audio.explosion.oncanplaythrough = onload;
@@ -59,6 +61,7 @@ Resource.Image.background_night.src = "img/background_night.png";
 Resource.Image.midground_fire.src = "img/midground_fire.png";
 
 Resource.Audio.music.src = "sfx/before_my_body_is_dry.mp3";
+Resource.Audio.music2.src = "sfx/gourmet_race.mp3";
 Resource.Audio.bullet.src = "sfx/bullet.wav";
 Resource.Audio.missile.src = "sfx/missile.wav";
 Resource.Audio.explosion.src = "sfx/explosion.wav";
@@ -67,14 +70,16 @@ Resource.Audio.showYoMoves.src = "sfx/ShowYoMoves.mp3";
 Resource.Audio.death.src = "sfx/death.mp3";
 Resource.Audio.yes.src = "sfx/Yes.mp3";
 
-Resource.Audio.music.volume = 0.1;
+Resource.Audio.music.volume = 1;
 Resource.Audio.music.loop = true;
+Resource.Audio.music2.volume = 0.1;
+Resource.Audio.music2.loop = true;
 Resource.Audio.bullet.volume = 0.1;
 Resource.Audio.bullet.loop = true;
 Resource.Audio.missile.volume = 0.2;
 Resource.Audio.explosion.volume = 0.2;
 Resource.Audio.powerupObtained.volume = 1;
-Resource.Audio.showYoMoves.volume = 0.1;
+Resource.Audio.showYoMoves.volume = 1;
 Resource.Audio.death.volume = 0.1
 Resource.Audio.yes.volume = 0.1;
 
