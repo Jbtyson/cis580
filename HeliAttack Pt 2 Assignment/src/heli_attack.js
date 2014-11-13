@@ -2,6 +2,7 @@
 var WIDTH = 800;
 var HEIGHT = 480;
 var LEVEL_LENGTH = 14000;
+var PI = Math.PI;
 
 // Fixed time step of 1/60th a second
 var TIME_STEP = 1000/60;
@@ -9,12 +10,13 @@ var TIME_STEP = 1000/60;
 // Resources
 //----------------------------------
 Resource = {
-	loading: 9,
+	loading: 10,
 	Image: {
 		spritesheet: new Image(),
 		foreground: new Image(),
 		midground: new Image(),
 		background: new Image(),
+		tankSpriteSheet: new Image(),
 	},
 	Audio: {
 		music: new Audio(),
@@ -33,6 +35,7 @@ Resource.Image.spritesheet.onload = onload;
 Resource.Image.foreground.onload = onload;
 Resource.Image.midground.onload = onload;
 Resource.Image.background.onload = onload;
+Resource.Image.tankSpriteSheet.onload = onload;
 
 Resource.Audio.music.oncanplaythrough = onload;
 Resource.Audio.bullet.oncanplaythrough = onload;
@@ -44,6 +47,7 @@ Resource.Image.spritesheet.src = "img/helicopter.png";
 Resource.Image.foreground.src = "img/foreground.png";
 Resource.Image.midground.src = "img/midground.png";
 Resource.Image.background.src = "img/background.png";
+Resource.Image.tankSpriteSheet.src = "img/tank.png";
 
 Resource.Audio.music.src = "sfx/before_my_body_is_dry.mp3";
 Resource.Audio.bullet.src = "sfx/bullet.wav";
@@ -142,7 +146,7 @@ var Game = function (canvasId) {
     var tank = new Enemy(
 		this,
 		400 * (i + 1),
-		350,
+		400,
 		"tank"
 	);
 	this.tanks.push(tank);
