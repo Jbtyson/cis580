@@ -23,7 +23,7 @@ var Enemy = function(game, x, y, type) {
 	this.maxMissileTimer = 5000;	// timer for when a missle be fired, ex. 5000 = at least one missile per 5 seconds
 	this.minMissileDelay = 2500;	// minimum time between missiles
 	this.chanceToFire = 0.5; // % per frame
-	this.missileTimer = this.maxMissileTimer;
+	this.missileTimer = this.maxMissileTimer;	
 	this.missileDelay = 0;
 };
 
@@ -75,11 +75,17 @@ Enemy.prototype = {
 						this.state = "active";
 					break;
 					
-				// simply flying left
+				// fly left
 				case "active":
 					this.x -= this.speed * elapsedTime;
 					if(this.screenX < -100)
 						this.state = "dead";
+					
+					// move up or down to get closer to heli
+					if(this.y > this.game.heli.y)
+						this.y -= 0.5 * this.speed * elapsedTime
+					else if(this.y < this.game.heli.y)
+						this.y += 0.1 * this.speed * elapsedTime
 					break;
 			}	
 		}
@@ -145,28 +151,39 @@ Enemy.prototype = {
 	render: function(context) {
 		// gun encampments
 		if(this.type == "gun") {
-			context.fillRect(this.x, this.y, 30, 30);
+			// angle gun
+			context.save();
+			context.translate(this.x+46, this.y+18)
+			context.rotate(this.getAngle());
+			context.drawImage(Resource.Image.gunSpriteSheet, 5, 1, 53, 5, 0, 0, 53, 5);
+			context.restore();
+			
+			//draw the gun encampment
+			context.save();
+			context.drawImage(Resource.Image.gunSpriteSheet, 0, 10, 87, 80, this.x, this.y, 87, 80);
+			context.restore();
 		}
 		
 		// jets
 		else if(this.type == "jet") {
-			context.fillRect(this.x, this.y, 50, 10);
+			context.save();
+			context.drawImage(Resource.Image.jetSpriteSheet, 0, 0, 100, 40, this.x, this.y, 100, 40);
+			context.restore();
 		}
 		
 		// tanks
 		else {
 			// angle gun
-			var a = this.getAngle() + PI;
 			context.save();
 			context.translate(this.x+28, this.y+28)
-			context.rotate(a);
+			context.rotate(this.getAngle());
 			context.drawImage(Resource.Image.tankSpriteSheet, 0, 56, 46, 4, 0, 0, 46, 4);
 			context.restore();
 			
 			//draw the tank
 			context.save();
 			context.drawImage(Resource.Image.tankSpriteSheet, 0, 0, 100, 53, this.x, this.y, 100, 53);
-			context.restore
+			context.restore();
 		}
 		
 	},
@@ -192,10 +209,10 @@ Enemy.prototype = {
 	getAngle: function() {
 		// gets the angle and corrects it because atan returns -pi/2 -> pi/2
 		angle = Math.atan((this.game.heli.y - this.y) / (this.game.heli.x - this.x));
-		if(this.ty - this.y < 0) {
+		if(this.game.heli.y - this.y < 0) {
 			angle += 2 * PI;
 		}
-		if(this.tx - this.x < 0) {
+		if(this.game.heli.x - this.x < 0) {
 			angle += PI;
 		}
 		while(angle > 2 * PI) {
