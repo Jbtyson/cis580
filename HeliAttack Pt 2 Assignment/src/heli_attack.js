@@ -158,15 +158,6 @@ var Game = function (canvasId) {
   this.tanks = [];
 	
   // Add enemies
-  for(i = 0; i < 100; i++) {
-    var target = new Target(
-		this,
-		Math.random() * (LEVEL_LENGTH - 800) + 400,
-		Math.random() * 300 + 50,
-		Math.random() * 10
-	);
-	this.targets.push(target);
-  } 
   for(i = 0; i < 20; i++) {
     var gun = new Enemy(
 		this,
@@ -201,8 +192,7 @@ var Game = function (canvasId) {
   this.lastTime = 0;
   this.gameTime = 0;
   this.fps = 0;
-  this.STARTING_FPS = 60;
-	
+  this.STARTING_FPS = 60;	
 }
 	
 Game.prototype = {
@@ -539,7 +529,6 @@ Game.prototype = {
 		);
 	}
 }
-
 var game = new Game('game');
 console.log(game);
 function waitForLoad() {

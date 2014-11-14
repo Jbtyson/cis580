@@ -14,6 +14,7 @@
   position: relative;
   width: 800px;
   height: 480px;
+  background-image: url("img/knee.png");
 }
 
 #gui-center {
