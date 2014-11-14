@@ -7,6 +7,7 @@ var Bullet = function(game, bx, by, vx, vy) {
   this.y = by;
   this.velocityX = vx;
   this.velocityY = vy;
+  this.state = "active";
 };
 
 Bullet.prototype = {
@@ -23,6 +24,12 @@ Bullet.prototype = {
 	update: function(elapsedTime) {
 		this.x += this.velocityX;
 		this.y += this.velocityY;
+		this.screenX = this.x - (this.game.heli.x - this.game.cameraOffset)
+		
+		if(this.y <= 0 || this.y >= HEIGHT)
+			this.state = "dead";
+		else if(this.screenX > WIDTH || this.screenX < 0) 
+			this.state = "dead";
 	},
 	
 	bounds: function() {

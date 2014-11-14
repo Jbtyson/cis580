@@ -2,6 +2,7 @@
 var WIDTH = 800;
 var HEIGHT = 480;
 var LEVEL_LENGTH = 14000;
+var PI = Math.PI;
 
 // Fixed time step of 1/60th a second
 var TIME_STEP = 1000/60;
@@ -9,12 +10,15 @@ var TIME_STEP = 1000/60;
 // Resources
 //----------------------------------
 Resource = {
-	loading: 9,
+	loading: 12,
 	Image: {
 		spritesheet: new Image(),
 		foreground: new Image(),
 		midground: new Image(),
 		background: new Image(),
+		tankSpriteSheet: new Image(),
+		jetSpriteSheet: new Image(),
+		gunSpriteSheet: new Image(),
 	},
 	Audio: {
 		music: new Audio(),
@@ -33,6 +37,9 @@ Resource.Image.spritesheet.onload = onload;
 Resource.Image.foreground.onload = onload;
 Resource.Image.midground.onload = onload;
 Resource.Image.background.onload = onload;
+Resource.Image.tankSpriteSheet.onload = onload;
+Resource.Image.jetSpriteSheet.onload = onload;
+Resource.Image.gunSpriteSheet.onload = onload;
 
 Resource.Audio.music.oncanplaythrough = onload;
 Resource.Audio.bullet.oncanplaythrough = onload;
@@ -44,6 +51,9 @@ Resource.Image.spritesheet.src = "img/helicopter.png";
 Resource.Image.foreground.src = "img/foreground.png";
 Resource.Image.midground.src = "img/midground.png";
 Resource.Image.background.src = "img/background.png";
+Resource.Image.tankSpriteSheet.src = "img/tank.png";
+Resource.Image.jetSpriteSheet.src = "img/jet.png";
+Resource.Image.gunSpriteSheet.src = "img/gun.png";
 
 Resource.Audio.music.src = "sfx/before_my_body_is_dry.mp3";
 Resource.Audio.bullet.src = "sfx/bullet.wav";
@@ -53,7 +63,7 @@ Resource.Audio.powerupObtained.src = "sfx/powerup_obtained.wav";
 
 Resource.Audio.music.volume = 0.1;
 Resource.Audio.music.loop = true;
-Resource.Audio.bullet.volume = 0.1;
+Resource.Audio.bullet.volume = 0.2;
 Resource.Audio.bullet.loop = true;
 Resource.Audio.missile.volume = 0.2;
 Resource.Audio.explosion.volume = 0.2;
@@ -115,6 +125,9 @@ var Game = function (canvasId) {
   this.bullets = [];
   this.missiles = [];
   this.powerups = [];
+  this.guns = [];
+  this.jets = [];
+  this.tanks = [];
 	
   // Add enemies
   for(i = 0; i < 100; i++) {
@@ -125,6 +138,33 @@ var Game = function (canvasId) {
 		Math.random() * 10
 	);
 	this.targets.push(target);
+  } 
+  for(i = 0; i < 20; i++) {
+    var gun = new Enemy(
+		this,
+		400 * (i + 1),
+		350,
+		"gun"
+	);
+	this.guns.push(gun);
+  }
+  for(i = 0; i < 20; i++) {
+    var tank = new Enemy(
+		this,
+		400 * (i + 1),
+		400,
+		"tank"
+	);
+	this.tanks.push(tank);
+  }
+  for(i = 0; i < 20; i++) {
+    var jet = new Enemy(
+		this,
+		400 * (i + 1),
+		100,
+		"jet"
+	);
+	this.jets.push(jet);
   }
   
   // Timing variables
@@ -162,7 +202,7 @@ Game.prototype = {
 		this.inputState.worldX += deltaX;
 		
 		
-		// Fire one bullet every 500ms
+		// Fire one bullet every 100ms
 		this.heli.bulletDelay += elapsedTime;
 		if(this.inputState.firing == true && (this.heli.bulletDelay > 100)) {
 			this.heli.fireBullet(this.inputState.worldX, this.inputState.worldY);
@@ -173,7 +213,7 @@ Game.prototype = {
 		this.bullets.forEach( function(bullet, index, arr) {
 			bullet.update(elapsedTime);
 			// Remove off-screen bullets
-			if(bullet.y > HEIGHT || bullet.y < 0 || bullet.x > LEVEL_LENGTH)
+			if(bullet.state === "dead")
 				arr = arr.splice(index, 1);
 		});
 		
@@ -194,6 +234,23 @@ Game.prototype = {
 		this.powerups.forEach( function(powerup, index, arr) {
 			powerup.update(elapsedTime);
 			if(powerup.state == "dead")
+				arr = arr.splice(index, 1);
+		});
+		
+		// Update the Enemies
+		this.guns.forEach( function(enemy, index, arr) {
+			enemy.update(elapsedTime);
+			if(enemy.state == "dead")
+				arr = arr.splice(index, 1);
+		});
+		this.jets.forEach( function(enemy, index, arr) {
+			enemy.update(elapsedTime);
+			if(enemy.state == "dead")
+				arr = arr.splice(index, 1);
+		});
+		this.tanks.forEach( function(enemy, index, arr) {
+			enemy.update(elapsedTime);
+			if(enemy.state == "dead")
 				arr = arr.splice(index, 1);
 		});
 		
@@ -262,6 +319,15 @@ Game.prototype = {
 		});
 		this.powerups.forEach( function(powerup) {
 			powerup.render(self.backBufferContext);
+		});
+		this.guns.forEach( function(enemy) {
+			enemy.render(self.backBufferContext);
+		});
+		this.jets.forEach( function(enemy) {
+			enemy.render(self.backBufferContext);
+		});
+		this.tanks.forEach( function(enemy) {
+			enemy.render(self.backBufferContext);
 		});
 
 		// Restore render state
@@ -354,6 +420,7 @@ Game.prototype = {
 			case 0:
 				this.inputState.firing = true;
 				Resource.Audio.bullet.play();
+				
 				break;
 			case 2:
 				this.heli.fireMissile(this.inputState.worldX, this.inputState.worldY);

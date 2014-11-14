@@ -1,0 +1,83 @@
+[33mcommit 54562d4a26a3d879c5f30bb3e378900df53907ba[m
+Author: unknown <jbtyson@N122W77.win.cis.ksu.edu>
+Date:   Wed Nov 12 15:25:44 2014 -0600
+
+    missile hell complete
+
+[33mcommit 430ccfafa2099d93a7ab48d49bedf11f8a2ce13c[m
+Author: James Blades Tyson Jr <linkmaster94@gmail.com>
+Date:   Tue Nov 11 03:07:21 2014 -0600
+
+    working on worldx problems still
+
+[33mcommit 63e0d0db083c838f910accfa226649a6e5b7f358[m
+Author: unknown <jbtyson@n122w89.win.cis.ksu.edu>
+Date:   Mon Nov 10 15:25:33 2014 -0600
+
+    more work on enemies
+
+[33mcommit 2cdd4fe8d1102d8a875d34d7edbc025fb81e01a8[m
+Author: James <linkmaster94@gmail.com>
+Date:   Sun Nov 9 19:50:26 2014 -0600
+
+    added enemies
+
+[33mcommit 603c4810194252431a440e42c536034cbacdfb4b[m
+Author: James <linkmaster94@gmail.com>
+Date:   Sun Nov 9 17:42:22 2014 -0600
+
+    added powerups, still need to implement collision
+
+[33mcommit 32cb1e5431cb67f1db6477eac97668944751bd58[m
+Author: James <linkmaster94@gmail.com>
+Date:   Sun Nov 9 17:08:36 2014 -0600
+
+    undeleted old assignment
+
+[33mcommit 0a75eb0a9eba26cd31688b239faf1772abcc80b5[m
+Author: James <linkmaster94@gmail.com>
+Date:   Sun Nov 9 17:07:42 2014 -0600
+
+    moved old assignment
+
+[33mcommit c930576c5c15a365f4fdf7fb2ea14eab80ac4177[m
+Author: James <linkmaster94@gmail.com>
+Date:   Sun Nov 9 17:05:39 2014 -0600
+
+    added sounds
+
+[33mcommit 9ce7f0ba69c9f838f6c3a6f716ef2f5b223d8344[m
+Author: James <linkmaster94@gmail.com>
+Date:   Mon Oct 27 09:40:53 2014 -0500
+
+    working heli most points
+
+[33mcommit 51b038bbf913cef762a4fb15d6772f9d49fa1395[m
+Author: James <linkmaster94@gmail.com>
+Date:   Wed Sep 17 14:47:11 2014 -0500
+
+    added light cycle
+
+[33mcommit ff107ee084057a5abedd1ab91e04c10ec30562d7[m
+Author: James Blades Tyson Jr. <linkmaster94@gmail.com>
+Date:   Sat Sep 6 16:00:26 2014 -0500
+
+    fixed console statements
+
+[33mcommit de2639f8ff2ef1efd237da25bfa5b2d95b7ed457[m
+Author: James Blades Tyson Jr. <linkmaster94@gmail.com>
+Date:   Sat Sep 6 15:45:27 2014 -0500
+
+    finished game
+
+[33mcommit 2ac85691e4435907808f3e6ac393ee4e793fd157[m
+Author: James <linkmaster94@gmail.com>
+Date:   Sat Sep 6 14:14:10 2014 -0500
+
+    Update
+
+[33mcommit 90e4dc48ad00e6c815a9b911a1c959040335cc42[m
+Author: jbtyson <jbtyson@ksu.edu>
+Date:   Thu Sep 4 14:39:05 2014 -0500
+
+    first version

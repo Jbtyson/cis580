@@ -24,6 +24,8 @@ Missile.prototype = {
 			case "flying":
 				context.save();
 				context.translate(this.x, this.y);
+				context.translate(8, 4);
+				context.rotate(this.getAngle());
 				context.drawImage(this.spriteSheet, 75, 56, 17, 8, 0, 0, 17, 8);
 				if(this.flicker)
 					context.drawImage(this.spriteSheet, 38, 55, 10, 10, -9, -1, 10, 10);
@@ -77,6 +79,24 @@ Missile.prototype = {
 				if(this.radius > 25) this.state = "dead";
 		}
 	
+	},
+	
+	getAngle: function() {
+		// gets the angle and corrects it because atan returns -pi/2 -> pi/2
+		angle = Math.atan((this.targetY - this.y) / (this.targetX - this.x));
+		if(this.targetY - this.y < 0) {
+			angle += 2 * PI;
+		}
+		if(this.targetX - this.x < 0) {
+			angle += PI;
+		}
+		while(angle > 2 * PI) {
+			angle -= 2 * PI;
+		}
+		while(angle < 0) {
+			angle += 2 * PI;
+		}
+		return angle;
 	},
 	
 	bounds: function() {
