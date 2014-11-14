@@ -95,7 +95,7 @@ Resource.Audio.explosion.volume = 0;//0.2;
 Resource.Audio.powerupObtained.volume = 0;//1;
 Resource.Audio.showYoMoves.volume = 0;//0.1;
 Resource.Audio.death.volume = 0;//0.1
-Resource.Audio.yes.volume = 1;
+Resource.Audio.yes.volume = 0.5;
 
 
 
@@ -343,10 +343,16 @@ Game.prototype = {
 	render: function(elapsedTime) {
 		var self = this;
 		
-		if(this.heli.x == 13500)
+		if(this.heli.x == 11750)
 		{
 			this.splash(this.backBufferContext);
 			this.heli.x = 0;
+		}
+		
+		if(this.heli.life == 0)
+		{
+			//game over :(
+			this.gameOver = true;
 		}
 		
 		if(level == 1)
@@ -356,7 +362,10 @@ Game.prototype = {
 		else if (level == 3)
 			this.parallaxLayers = this.parallaxLayers3;
 		else 
+		{
 			//game is over.  display screen and stuff
+			this.gameOver = true;
+		}
 		
 		// Clear the screen
 		this.backBufferContext.fillRect(0, 0, WIDTH, HEIGHT);
@@ -542,12 +551,28 @@ Game.prototype = {
 	{
 		var self = this;
 		self.gui.message("You have completed level " + level++ + "!  Score: " + this.score);
+		
+		ctx.save();
+		ctx.drawImage(Resource.Image.knee, 0, 0);
+		ctx.restore();
+		this.sleep(5000);
 		setTimeout( function() {
 			self.gui.message("")
-		}, 3000);
-		ctx.drawImage(Resource.Image.knee, 0, 0);
+		}, 5000)
 		Resource.Audio.yes.play();
 	},
+	
+	//I feel so terrible using this sleep function, but sometimes things get ugly
+	sleep: function(ms)
+	{
+		 var start = new Date().getTime();
+  for (var i = 0; i < 1e7; i++) {
+    if ((new Date().getTime() - start) > ms){
+      break;
+    }
+  }
+	},
+
 	
 	// The game loop.  See
 	// http://gameprogrammingpatterns.com/game-loop.html

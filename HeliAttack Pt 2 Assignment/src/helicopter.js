@@ -11,7 +11,8 @@ var Helicopter = function(game, x, y) {
 	this.turret_angle = 0;
 	this.missiles = 3;
 	this.sprite_sheet = Resource.Image.spritesheet;
-	this.bulletDelay = 0;
+	this.bulletDelay = 0
+	this.life = 3;
 };
 
 Helicopter.prototype = {
