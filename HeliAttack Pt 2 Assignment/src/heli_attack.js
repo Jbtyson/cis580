@@ -3,6 +3,7 @@ var WIDTH = 800;
 var HEIGHT = 480;
 var LEVEL_LENGTH = 14000;
 var PI = Math.PI;
+this.level = 1;
 
 // Fixed time step of 1/60th a second
 var TIME_STEP = 1000/60;
@@ -10,7 +11,7 @@ var TIME_STEP = 1000/60;
 // Resources
 //----------------------------------
 Resource = {
-	loading: 12,
+	loading: 19,
 	Image: {
 		spritesheet: new Image(),
 		foreground: new Image(),
@@ -19,13 +20,20 @@ Resource = {
 		tankSpriteSheet: new Image(),
 		jetSpriteSheet: new Image(),
 		gunSpriteSheet: new Image(),
+		background_night: new Image(),
+		midground_fire: new Image(),
+		knee: new Image(),
 	},
 	Audio: {
 		music: new Audio(),
+		music2: new Audio(),
 		bullet: new Audio(),
 		missile: new Audio(),
 		explosion: new Audio(),
 		powerupObtained: new Audio(),
+		showYoMoves: new Audio(),
+		death: new Audio(),
+		yes: new Audio(),
 	}
 }
 function onload() { 
@@ -40,12 +48,19 @@ Resource.Image.background.onload = onload;
 Resource.Image.tankSpriteSheet.onload = onload;
 Resource.Image.jetSpriteSheet.onload = onload;
 Resource.Image.gunSpriteSheet.onload = onload;
+Resource.Image.background_night.onload = onload;
+Resource.Image.midground_fire.onload = onload;
+Resource.Image.knee.onload = onload;
 
 Resource.Audio.music.oncanplaythrough = onload;
+Resource.Audio.music2.oncanplaythrough = onload;
 Resource.Audio.bullet.oncanplaythrough = onload;
 Resource.Audio.missile.oncanplaythrough = onload;
 Resource.Audio.explosion.oncanplaythrough = onload;
 Resource.Audio.powerupObtained.oncanplaythrough = onload;
+Resource.Audio.showYoMoves.oncanplaythrough = onload;
+Resource.Audio.death.oncanplaythrough = onload;
+Resource.Audio.yes.oncanplaythrough = onload;
 
 Resource.Image.spritesheet.src = "img/helicopter.png";
 Resource.Image.foreground.src = "img/foreground.png";
@@ -54,20 +69,33 @@ Resource.Image.background.src = "img/background.png";
 Resource.Image.tankSpriteSheet.src = "img/tank.png";
 Resource.Image.jetSpriteSheet.src = "img/jet.png";
 Resource.Image.gunSpriteSheet.src = "img/gun.png";
+Resource.Image.background_night.src = "img/background_night.png";
+Resource.Image.midground_fire.src = "img/midground_fire.png";
+Resource.Image.knee.src = "img/knee.png";
 
 Resource.Audio.music.src = "sfx/before_my_body_is_dry.mp3";
+//http://downloads.khinsider.com/game-soundtracks/album/kirby-super-star-original-game-audio/27-gourmet-race-stage-1-3.mp3
+Resource.Audio.music2.src = "sfx/gourmet_race.mp3";
 Resource.Audio.bullet.src = "sfx/bullet.wav";
 Resource.Audio.missile.src = "sfx/missile.wav";
 Resource.Audio.explosion.src = "sfx/explosion.wav";
 Resource.Audio.powerupObtained.src = "sfx/powerup_obtained.wav";
+Resource.Audio.showYoMoves.src = "sfx/ShowYoMoves.mp3";
+Resource.Audio.death.src = "sfx/death.mp3";
+Resource.Audio.yes.src = "sfx/Yes.mp3";
 
 Resource.Audio.music.volume = 0.1;
 Resource.Audio.music.loop = true;
-Resource.Audio.bullet.volume = 0.2;
+Resource.Audio.music2.volume = 0.1;
+Resource.Audio.music2.loop = true;
+Resource.Audio.bullet.volume = 0.1;
 Resource.Audio.bullet.loop = true;
 Resource.Audio.missile.volume = 0.2;
 Resource.Audio.explosion.volume = 0.2;
 Resource.Audio.powerupObtained.volume = 1;
+Resource.Audio.showYoMoves.volume = 0.1;
+Resource.Audio.death.volume = 0.1
+Resource.Audio.yes.volume = 0.1;
 
 
 
@@ -89,16 +117,16 @@ var Game = function (canvasId) {
   this.cameraOffset = 200;
   this.parallaxLayers = [
 	{
-	  image: Resource.Image.foreground,
-	  scrollSpeed: 1
+		image: Resource.Image.foreground,
+		scrollSpeed: 1
 	},
 	{
-	  image: Resource.Image.midground,
-	  scrollSpeed: 0.5
+		image: Resource.Image.midground,
+		scrollSpeed: 0.5
 	},
 	{
-	  image: Resource.Image.background,
-	  scrollSpeed: 0.25
+		image: Resource.Image.background,
+		scrollSpeed: 0.25
 	}
   ];
 	
@@ -267,6 +295,9 @@ Game.prototype = {
 					self.powerups.push(new Powerup(self, target.x, target.y, "random"));
 					targetArr = targetArr.splice(targetIndex, 1);
 					self.score += 10;
+					///////////////////////////////////////////////////
+					Resource.Audio.yes.play();
+					///////////////////////////////////////////////////
 				}
 			});
 			// check for missile collision
@@ -276,6 +307,9 @@ Game.prototype = {
 					// remove the target from the world
 					targetArr = targetArr.splice(targetIndex, 1);
 					self.score += 10;
+					////////////////////////////////////////////
+					Resource.Audio.yes.play();
+					////////////////////////////////////////////
 				}
 			});
 		});
@@ -439,6 +473,7 @@ Game.prototype = {
 	
 	start: function() {
 		var self = this;
+		Resource.Audio.showYoMoves.play();
 		
 		Resource.Audio.music.play();
 		
@@ -451,7 +486,7 @@ Game.prototype = {
 		
 		this.startTime = Date.now();
 		
-		this.gui.message("Begin!");
+		this.gui.message("Show Your Moves!");
 		setTimeout( function() {
 			self.gui.message("")
 		}, 3000);
@@ -512,6 +547,7 @@ function waitForLoad() {
 		game.start();
 	} else {
 		setTimeout(waitForLoad, 1000);
+		
 	}
 };
 waitForLoad();
