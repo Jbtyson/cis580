@@ -3,7 +3,7 @@ var WIDTH = 800;
 var HEIGHT = 480;
 var LEVEL_LENGTH = 14000;
 var PI = Math.PI;
-this.level = 1;
+var level = 1;
 
 // Fixed time step of 1/60th a second
 var TIME_STEP = 1000/60;
@@ -84,18 +84,18 @@ Resource.Audio.showYoMoves.src = "sfx/ShowYoMoves.mp3";
 Resource.Audio.death.src = "sfx/death.mp3";
 Resource.Audio.yes.src = "sfx/Yes.mp3";
 
-Resource.Audio.music.volume = 0.1;
+Resource.Audio.music.volume = 0;//0.1;
 Resource.Audio.music.loop = true;
-Resource.Audio.music2.volume = 0.1;
+Resource.Audio.music2.volume = 0;//0.1;
 Resource.Audio.music2.loop = true;
-Resource.Audio.bullet.volume = 0.1;
+Resource.Audio.bullet.volume = 0;//0.1;
 Resource.Audio.bullet.loop = true;
-Resource.Audio.missile.volume = 0.2;
-Resource.Audio.explosion.volume = 0.2;
-Resource.Audio.powerupObtained.volume = 1;
-Resource.Audio.showYoMoves.volume = 0.1;
-Resource.Audio.death.volume = 0.1
-Resource.Audio.yes.volume = 0.1;
+Resource.Audio.missile.volume = 0;//0.2;
+Resource.Audio.explosion.volume = 0;//0.2;
+Resource.Audio.powerupObtained.volume = 0;//1;
+Resource.Audio.showYoMoves.volume = 0;//0.1;
+Resource.Audio.death.volume = 0;//0.1
+Resource.Audio.yes.volume = 0;//0.1;
 
 
 
@@ -115,7 +115,8 @@ var Game = function (canvasId) {
   
   // Parallax variables
   this.cameraOffset = 200;
-  this.parallaxLayers = [
+  
+  this.parallaxLayers1 = [
 	{
 		image: Resource.Image.foreground,
 		scrollSpeed: 1
@@ -129,6 +130,39 @@ var Game = function (canvasId) {
 		scrollSpeed: 0.25
 	}
   ];
+  
+  this.parallaxLayers2 = [
+	{
+		image: Resource.Image.foreground,
+		scrollSpeed: 1
+	},
+	{
+		image: Resource.Image.midground,
+		scrollSpeed: 0.5
+	},
+	{
+		image: Resource.Image.background_night,
+		scrollSpeed: 0.25
+	}
+  ];
+  
+  this.parallaxLayers3 = [
+	{
+		image: Resource.Image.foreground,
+		scrollSpeed: 1
+	},
+	{
+		image: Resource.Image.midground_fire,
+		scrollSpeed: 0.5
+	},
+	{
+		image: Resource.Image.background_night,
+		scrollSpeed: 0.25
+	}
+  ];
+  
+  
+  this.parallaxLayers = [];
 	
   // Input variables	
 	this.inputState = {
@@ -308,7 +342,15 @@ Game.prototype = {
 	
 	render: function(elapsedTime) {
 		var self = this;
-			
+		
+		if(level == 1)
+			this.parallaxLayers = this.parallaxLayers1;
+		else if (level == 2)
+			this.parallaxLayers = this.parallaxLayers2;
+		else if (level == 3)
+			this.parallaxLayers = this.parallaxLayers3;
+		else 
+			//game is over.  display screen and stuff
 		
 		// Clear the screen
 		this.backBufferContext.fillRect(0, 0, WIDTH, HEIGHT);
