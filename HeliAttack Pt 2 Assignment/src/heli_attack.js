@@ -381,7 +381,7 @@ Game.prototype = {
 			this.backBufferContext.save();
 			this.backBufferContext.drawImage(Resource.Image.winner, 0, 0);
 			this.backBufferContext.restore();
-			self.gui.message("YOU WIN!!! HYPE TRAIN STOPS FOR NOBODY");
+			self.gui.message("YOU WIN!!! HYPE TRAIN STOPS FOR NOBODY. Created By James Tyson and Alex L'Esperance");
 		}
 		
 		if(!this.gameOver)
