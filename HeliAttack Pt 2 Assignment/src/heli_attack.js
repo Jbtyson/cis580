@@ -4,6 +4,7 @@ var HEIGHT = 480;
 var LEVEL_LENGTH = 14000;
 var PI = Math.PI;
 var level = 1;
+var transition = false;
 
 // Fixed time step of 1/60th a second
 var TIME_STEP = 1000/60;
@@ -11,7 +12,7 @@ var TIME_STEP = 1000/60;
 // Resources
 //----------------------------------
 Resource = {
-	loading: 19,
+	loading: 21,
 	Image: {
 		spritesheet: new Image(),
 		foreground: new Image(),
@@ -23,6 +24,8 @@ Resource = {
 		background_night: new Image(),
 		midground_fire: new Image(),
 		knee: new Image(),
+		gameOver: new Image(),
+		winner: new Image(),
 	},
 	Audio: {
 		music: new Audio(),
@@ -51,6 +54,8 @@ Resource.Image.gunSpriteSheet.onload = onload;
 Resource.Image.background_night.onload = onload;
 Resource.Image.midground_fire.onload = onload;
 Resource.Image.knee.onload = onload;
+Resource.Image.gameOver.onload = onload;
+Resource.Image.winner.onload = onload;
 
 Resource.Audio.music.oncanplaythrough = onload;
 Resource.Audio.music2.oncanplaythrough = onload;
@@ -72,6 +77,8 @@ Resource.Image.gunSpriteSheet.src = "img/gun.png";
 Resource.Image.background_night.src = "img/background_night.png";
 Resource.Image.midground_fire.src = "img/midground_fire.png";
 Resource.Image.knee.src = "img/knee.png";
+Resource.Image.gameOver.src = "img/gameOver.png";
+Resource.Image.winner.src = "img/winner.png";
 
 Resource.Audio.music.src = "sfx/before_my_body_is_dry.mp3";
 //http://downloads.khinsider.com/game-soundtracks/album/kirby-super-star-original-game-audio/27-gourmet-race-stage-1-3.mp3
@@ -343,16 +350,22 @@ Game.prototype = {
 	render: function(elapsedTime) {
 		var self = this;
 		
-		if(this.heli.x == 11750)
+		if(this.heli.x >= 11750)
 		{
+			transition = true;
 			this.splash(this.backBufferContext);
-			this.heli.x = 0;
+			this.heli.x = 200;
+			transition = false;
 		}
 		
 		if(this.heli.life == 0)
 		{
 			//game over :(
 			this.gameOver = true;
+			this.backBufferContext.save();
+			this.backBufferContext.drawImage(Resource.Image.gameOver, 0, 0);
+			this.backBufferContext.restore();
+
 		}
 		
 		if(level == 1)
@@ -365,8 +378,14 @@ Game.prototype = {
 		{
 			//game is over.  display screen and stuff
 			this.gameOver = true;
+			this.backBufferContext.save();
+			this.backBufferContext.drawImage(Resource.Image.winner, 0, 0);
+			this.backBufferContext.restore();
+			self.gui.message("YOU WIN!!! HYPE TRAIN STOPS FOR NOBODY");
 		}
 		
+		if(!this.gameOver)
+		{
 		// Clear the screen
 		this.backBufferContext.fillRect(0, 0, WIDTH, HEIGHT);
 		
@@ -437,9 +456,10 @@ Game.prototype = {
 		
 		
 		//this.backBufferContext.drawImage(this.backBuffer, 0, 0, WIDTH, 50);
-		
+		}
 		// Flip buffers
 		this.screenContext.drawImage(this.backBuffer, 0, 0);
+		
 	},
 	
 	keyDown: function(e)
@@ -551,14 +571,25 @@ Game.prototype = {
 	{
 		var self = this;
 		self.gui.message("You have completed level " + level++ + "!  Score: " + this.score);
-		
+
+		/*
 		ctx.save();
-		ctx.drawImage(Resource.Image.knee, 0, 0);
+		ctx.strokeStyle = "#bae";
+		ctx.fillStyle = "#bae";
+		ctx.rect(0, 0, 800, 480);
+		ctx.stroke();
 		ctx.restore();
+		*/
 		this.sleep(5000);
 		setTimeout( function() {
 			self.gui.message("")
 		}, 5000)
+		/*
+		setTimeout(function() {
+			ctx.save();
+			ctx.restore();
+		}, 5000)
+		*/
 		Resource.Audio.yes.play();
 	},
 	

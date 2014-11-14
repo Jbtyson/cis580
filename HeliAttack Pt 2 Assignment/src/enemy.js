@@ -206,6 +206,21 @@ Enemy.prototype = {
 		this.missileDelay = 0;
 	},
 	
+	/*
+	fireBullet: function()
+	{
+		var bullet = new Bullet(
+			this.game,
+			this.x,
+			this.y,
+			1,
+			1
+		);
+		this.game.bullets.push(bullet);
+		
+	},
+	*/
+	
 	getAngle: function() {
 		// gets the angle and corrects it because atan returns -pi/2 -> pi/2
 		angle = Math.atan((this.game.heli.y - this.y) / (this.game.heli.x - this.x));
