@@ -95,7 +95,7 @@ Resource.Audio.explosion.volume = 0;//0.2;
 Resource.Audio.powerupObtained.volume = 0;//1;
 Resource.Audio.showYoMoves.volume = 0;//0.1;
 Resource.Audio.death.volume = 0;//0.1
-Resource.Audio.yes.volume = 0;//0.1;
+Resource.Audio.yes.volume = 1;
 
 
 
@@ -343,6 +343,12 @@ Game.prototype = {
 	render: function(elapsedTime) {
 		var self = this;
 		
+		if(this.heli.x == 13500)
+		{
+			this.splash(this.backBufferContext);
+			this.heli.x = 0;
+		}
+		
 		if(level == 1)
 			this.parallaxLayers = this.parallaxLayers1;
 		else if (level == 2)
@@ -528,6 +534,19 @@ Game.prototype = {
 				self.loop.call(self, time);
 			}
 		);
+	},
+	
+	
+	//display splash screen upon level completion
+	splash: function(ctx)
+	{
+		var self = this;
+		self.gui.message("You have completed level " + level++ + "!  Score: " + this.score);
+		setTimeout( function() {
+			self.gui.message("")
+		}, 3000);
+		ctx.drawImage(Resource.Image.knee, 0, 0);
+		Resource.Audio.yes.play();
 	},
 	
 	// The game loop.  See
